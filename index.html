@@ -69,11 +69,76 @@ input{font-family:inherit}
 .app{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.08fr);height:calc(100dvh - 57px)}
 .mapcol{position:relative;display:flex;flex-direction:column;border-right:1px solid var(--edge);min-height:0}
 .panel{overflow-y:auto;min-height:0;background:var(--ink);-webkit-overflow-scrolling:touch}
+
 @media (max-width:960px){
-  .app{grid-template-columns:1fr;height:auto}
+  .app{display:block;height:auto}
   .mapcol{border-right:none;border-bottom:1px solid var(--edge)}
-  .panel{overflow:visible}
-  #map{height:46vh!important;min-height:300px}
+  .panel{overflow:visible;height:auto}
+  #map{height:42vh!important;min-height:250px;max-height:430px;flex:none}
+}
+
+/* --- Tablet y móvil grande --- */
+@media (max-width:720px){
+  .topbar{padding:10px 14px;gap:10px}
+  .brand{flex-direction:column;gap:1px}
+  .brand .mark{font-size:19px}
+  .brand .sub{font-size:9px;letter-spacing:.13em}
+  .topbar .now{gap:7px}
+  .chip{font-size:9.5px;padding:4px 8px}
+  .searchwrap{padding:8px}
+  .searchwrap input{font-size:16px;padding:9px 11px}   /* 16px evita el zoom automático al enfocar */
+  .btn{padding:9px 11px}
+  #map{height:40vh!important}
+  .spots{padding:8px;gap:6px}
+  .spot{font-size:11.5px;padding:6px 10px}
+
+  .block{padding:18px 14px 0}
+  .block:last-child{padding-bottom:38px}
+  .locbar{padding:16px 14px 0}
+  .empty{padding:30px 16px}
+  .empty h2{font-size:24px}
+  .empty li{font-size:13.5px}
+
+  .stats{grid-template-columns:repeat(2,1fr);gap:7px}
+  .stat{padding:10px 11px}
+  .stat .v{font-size:18px}
+
+  .win{padding:13px 14px}
+  .win__time{font-size:20px}
+  .win__score{margin-left:0;width:100%;margin-top:2px}
+  .bar{flex:1;width:auto}
+  .why{font-size:11px;padding:3px 7px}
+
+  .fcd{padding:9px 5px}
+  .fcd .ic{font-size:19px}
+  .fcd .t{font-size:13px}
+  .fcd .r{font-size:10px}
+
+  .card{padding:12px}
+  .card__h{gap:9px;flex-wrap:wrap}
+  .card__h h4{font-size:14.5px}
+  .card__h .pill,.card__h .rank{font-size:9.5px}
+  .card p{font-size:13px}
+  .reel{height:96px}
+  .extremes{grid-template-columns:repeat(auto-fit,minmax(96px,1fr));gap:7px}
+  .ext{padding:9px}
+  .ext .h{font-size:17px}
+  .legend{font-size:10px;gap:9px}
+  .note{font-size:11px}
+}
+
+/* --- Móvil pequeño --- */
+@media (max-width:400px){
+  .topbar{padding:9px 11px}
+  .brand .sub{display:none}
+  .block,.locbar{padding-left:11px;padding-right:11px}
+  .locbar h2{font-size:20px}
+  .card .lure-ico{flex-basis:38px}
+  .card .lure-ico svg{width:38px}
+  .reel{height:88px}
+  .sw{font-size:11px}
+  .fc{gap:6px}
+  .fcd{padding:8px 3px}
 }
 
 /* ---------- MAP + SEARCH ---------- */
@@ -151,7 +216,6 @@ input{font-family:inherit}
 
 /* stat grid */
 .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
-@media (max-width:520px){.stats{grid-template-columns:repeat(2,1fr)}}
 .stat{background:linear-gradient(180deg,var(--panel),var(--deep));border:1px solid var(--edge);
   border-radius:13px;padding:11px 12px}
 .stat .k{font-family:"JetBrains Mono",monospace;font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;
@@ -224,7 +288,7 @@ input{font-family:inherit}
 
 /* ---------- REEL: animación de la técnica ---------- */
 .reel{position:relative;height:112px;margin:11px 0 2px;border-radius:12px;overflow:hidden;
-  background:linear-gradient(180deg,#0a3446 0%,#082c3c 58%,#062230 100%);border:1px solid var(--edge)}
+  background:linear-gradient(180deg,#0e4d66 0%,#0b3a50 55%,#07293a 100%);border:1px solid var(--edge2)}
 .reel__surf{position:absolute;top:0;left:0;right:0;height:12px;
   background:repeating-linear-gradient(90deg,rgba(111,227,210,.22) 0 6px,transparent 6px 14px);
   animation:surf 5s linear infinite}
@@ -238,26 +302,29 @@ input{font-family:inherit}
              radial-gradient(circle at 64% 100%,#14495e 6px,transparent 7px),
              radial-gradient(circle at 86% 100%,#14495e 4px,transparent 5px)}
 .reel__tech{position:absolute;top:7px;left:9px;z-index:3;font-family:"JetBrains Mono",monospace;
-  font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--chart);
-  background:rgba(4,25,31,.72);padding:3px 7px;border-radius:6px;border:1px solid var(--edge)}
-.bait{position:absolute;top:34%;left:6%;width:24px;height:10px;border-radius:7px;z-index:2;
-  background:var(--chart);box-shadow:0 1px 6px rgba(0,0,0,.45)}
-.bait::before{content:"";position:absolute;top:2.5px;left:4px;width:3px;height:3px;border-radius:50%;background:#04191f}
-.bait::after{content:"";position:absolute;top:2.5px;right:-6px;width:8px;height:5px;
-  border-radius:0 60% 60% 0/0 50% 50% 0;background:inherit;opacity:.85}
+  font-size:10px;letter-spacing:.09em;text-transform:uppercase;color:#c8fff5;font-weight:600;
+  background:rgba(3,18,24,.88);padding:4px 8px;border-radius:6px;border:1px solid rgba(111,227,210,.35)}
+.bait{position:absolute;top:34%;left:6%;width:30px;height:13px;border-radius:8px;z-index:2;
+  background:var(--chart);
+  box-shadow:0 0 0 1.6px rgba(3,18,24,.9), 0 0 12px rgba(255,255,255,.3), 0 2px 7px rgba(0,0,0,.5)}
+.bait::before{content:"";position:absolute;top:3px;left:5px;width:4px;height:4px;border-radius:50%;
+  background:#03121a;box-shadow:0 0 0 1.2px rgba(255,255,255,.7)}
+.bait::after{content:"";position:absolute;top:3px;right:-8px;width:11px;height:7px;
+  border-radius:0 60% 60% 0/0 50% 50% 0;background:inherit;opacity:.95}
 
-.b-jig{background:linear-gradient(180deg,#e6f4fb,#8fb0c0)}
-.b-spoon{background:linear-gradient(180deg,#ffe08a,#d39a2a);border-radius:9px/13px}
-.b-popper{background:linear-gradient(180deg,#f4f1e8,#e0453c)}
-.b-stick{background:linear-gradient(180deg,#e8f3fb,#3f7fbf)}
-.b-minnow{background:linear-gradient(180deg,#bfe02a,#ff8c42)}
-.b-crank{background:linear-gradient(180deg,#8be34a,#2a9d3a);height:12px}
-.b-paddle{background:linear-gradient(180deg,#bfe6ff,#244b9c)}
-.b-shad{background:linear-gradient(180deg,#dfeaf2,#9fb6c4)}
-.b-bucktail{background:linear-gradient(180deg,#f4f1e8,#c9b48a)}
-.b-rope{background:linear-gradient(180deg,#ffffff,#dfe8ee);border-radius:4px;width:20px;height:8px}
-.b-rope::after{width:14px;height:7px;border-radius:0 40% 40% 0/0 50% 50% 0;
-  background:repeating-linear-gradient(90deg,#f4f8fa 0 2px,transparent 2px 3px);opacity:.95;right:-13px;top:1px}
+/* Colores saturados y claros: tienen que leerse sobre el azul del agua */
+.b-jig{background:linear-gradient(180deg,#ffffff,#a9d4e8)}
+.b-spoon{background:linear-gradient(180deg,#fff3b0,#f2a81c);border-radius:10px/15px}
+.b-popper{background:linear-gradient(180deg,#fffdf5,#ff4a3d)}
+.b-stick{background:linear-gradient(180deg,#f2fbff,#4ea6f0)}
+.b-minnow{background:linear-gradient(180deg,#e4ff4a,#ff8c1a)}
+.b-crank{background:linear-gradient(180deg,#c4ff6b,#3fd44f);height:15px}
+.b-paddle{background:linear-gradient(180deg,#d8f0ff,#4d8ff5)}
+.b-shad{background:linear-gradient(180deg,#ffffff,#c3dced)}
+.b-bucktail{background:linear-gradient(180deg,#fffaf0,#f0d79a)}
+.b-rope{background:linear-gradient(180deg,#ffffff,#e8f2f8);border-radius:5px;width:24px;height:11px}
+.b-rope::after{width:17px;height:9px;border-radius:0 40% 40% 0/0 50% 50% 0;
+  background:repeating-linear-gradient(90deg,#ffffff 0 2px,transparent 2px 3.5px);opacity:1;right:-16px;top:1px}
 
 .a-skitter{animation:skitter 3.2s linear infinite}
 @keyframes skitter{
@@ -1415,7 +1482,10 @@ function mountChart(dayIdx){
   if(!day) return;
   const host = document.getElementById("chartHost");
 
-  const W = 720, H = 240, PL = 42, PR = 14, PT = 18, PB = 30;
+  STATE.selDay = dayIdx;
+  const M = window.innerWidth < 760;                 // en móvil el SVG se escala mucho: agrandamos todo
+  const FS = M ? 17 : 10, FSX = M ? 18 : 10.5;
+  const W = 720, H = M ? 300 : 240, PL = M ? 62 : 42, PR = M ? 18 : 14, PT = M ? 26 : 18, PB = M ? 44 : 30;
   const iw = W-PL-PR, ih = H-PT-PB;
   const idx = day.idx;
   const vals = idx.map(i => tide.H[i]);
@@ -1452,25 +1522,26 @@ function mountChart(dayIdx){
 
   // rejilla horaria
   let grid = "";
-  for(let h=0; h<=24; h+=3){
+  const hStep = M ? 6 : 3;
+  for(let h=0; h<=24; h+=hStep){
     const gx = PL + (h/24)*iw;
     grid += `<line x1="${gx.toFixed(1)}" y1="${PT}" x2="${gx.toFixed(1)}" y2="${PT+ih}" stroke="rgba(255,255,255,.07)" stroke-width="1"/>
-             <text x="${gx.toFixed(1)}" y="${PT+ih+18}" fill="#8bb0bb" font-size="10" font-family="JetBrains Mono,monospace" text-anchor="middle">${pad(h%24)}h</text>`;
+             <text x="${gx.toFixed(1)}" y="${PT+ih+(M?26:18)}" fill="#a8c8d2" font-size="${FS}" font-family="JetBrains Mono,monospace" text-anchor="middle">${pad(h%24)}h</text>`;
   }
   // eje Y
   let yaxis = "";
   for(let k=0;k<=3;k++){
     const v = lo + (hi-lo)*k/3, gy = y(v);
     yaxis += `<line x1="${PL}" y1="${gy.toFixed(1)}" x2="${PL+iw}" y2="${gy.toFixed(1)}" stroke="rgba(255,255,255,.06)"/>
-              <text x="${PL-7}" y="${(gy+3.5).toFixed(1)}" fill="#8bb0bb" font-size="10" font-family="JetBrains Mono,monospace" text-anchor="end">${v.toFixed(1)}</text>`;
+              <text x="${PL-8}" y="${(gy+FS*0.35).toFixed(1)}" fill="#a8c8d2" font-size="${FS}" font-family="JetBrains Mono,monospace" text-anchor="end">${v.toFixed(1)}</text>`;
   }
 
   // extremos
   const marks = day.extremes.map(e => {
     const ex = x(e.time.getTime()), ey = y(e.height);
     const up = e.type==="alta";
-    return `<circle cx="${ex.toFixed(1)}" cy="${ey.toFixed(1)}" r="4.5" fill="${up?"#6fe3d2":"#ffb03a"}" stroke="#04191f" stroke-width="1.6"/>
-            <text x="${ex.toFixed(1)}" y="${(up?ey-11:ey+18).toFixed(1)}" fill="${up?"#6fe3d2":"#ffb03a"}" font-size="10.5"
+    return `<circle cx="${ex.toFixed(1)}" cy="${ey.toFixed(1)}" r="${M?6.5:4.5}" fill="${up?"#6fe3d2":"#ffb03a"}" stroke="#04191f" stroke-width="1.8"/>
+            <text x="${ex.toFixed(1)}" y="${(up?ey-(M?14:11):ey+(M?26:18)).toFixed(1)}" fill="${up?"#6fe3d2":"#ffb03a"}" font-size="${FSX}"
               font-family="JetBrains Mono,monospace" font-weight="700" text-anchor="middle">${hhmm(e.time)}</text>`;
   }).join("");
 
@@ -1478,7 +1549,7 @@ function mountChart(dayIdx){
   const now = Date.now();
   const nowLine = (now>=startMs && now<=startMs+86400000)
     ? `<line x1="${x(now).toFixed(1)}" y1="${PT}" x2="${x(now).toFixed(1)}" y2="${PT+ih}" stroke="#ff6f5c" stroke-width="1.8" stroke-dasharray="4 3"/>
-       <text x="${x(now).toFixed(1)}" y="${PT-5}" fill="#ff6f5c" font-size="10" font-family="JetBrains Mono,monospace" text-anchor="middle">AHORA</text>` : "";
+       <text x="${x(now).toFixed(1)}" y="${PT-6}" fill="#ff6f5c" font-size="${FS}" font-family="JetBrains Mono,monospace" font-weight="700" text-anchor="middle">AHORA</text>` : "";
 
   host.innerHTML = `
     <div class="chartbox">
@@ -1489,7 +1560,7 @@ function mountChart(dayIdx){
         </linearGradient></defs>
         ${night}${winRects}${grid}${yaxis}
         <path d="${area}" fill="url(#tg)"/>
-        <path d="${dPath}" fill="none" stroke="#6fe3d2" stroke-width="2.4" stroke-linecap="round"/>
+        <path d="${dPath}" fill="none" stroke="#6fe3d2" stroke-width="${M?3.4:2.4}" stroke-linecap="round"/>
         ${marks}${nowLine}
       </svg>
       <div class="legend">
@@ -1570,6 +1641,16 @@ function tickClock(){
   document.getElementById("clock").textContent = DOW[d.getDay()]+" "+hhmm(d)+" PA";
 }
 tickClock(); setInterval(tickClock, 30000);
+
+// Redibujar el gráfico al rotar el teléfono o cambiar el tamaño de ventana
+let rzTimer = null;
+window.addEventListener("resize", () => {
+  clearTimeout(rzTimer);
+  rzTimer = setTimeout(() => {
+    if(STATE && document.getElementById("chartHost")) mountChart(STATE.selDay || 0);
+    if(mapOk && map) map.invalidateSize();
+  }, 220);
+});
 
 initMap();
 loadSaved();
